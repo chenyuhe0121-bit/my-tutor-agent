@@ -15,7 +15,7 @@
 ## 1. 快速启动
 
 ```powershell
-cd D:\实习文件夹\tutor-ai-agent-mvp
+cd D:\项目\tutor-ai-agent-mvp
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
