@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ settings.app_name }}</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <section class="topbar">
+      <div>
+        <h1>能力导向型家教 AI Agent MVP</h1>
+        <p>生成单节课可交付教学包：教师授课版、学生讲义版、作业答案版、家长反馈版、学生档案更新。</p>
+      </div>
+      <div class="status">
+        {% if settings.llm_api_key %}
+          <span class="ok">DeepSeek 已配置</span>
+        {% else %}
+          <span class="warn">演示模式：未配置 LLM_API_KEY</span>
+        {% endif %}
+      </div>
+    </section>
+
+    <section class="grid">
+      <aside class="panel profile">
+        <h2>学生画像</h2>
+        <dl>
+          <dt>地区</dt><dd>{{ student.region }}</dd>
+          <dt>年级</dt><dd>{{ student.grade }}</dd>
+          <dt>科目</dt><dd>{{ "、".join(student.subjects) }}</dd>
+          <dt>阶段</dt><dd>{{ student.stage }}</dd>
+          <dt>导向</dt><dd>{{ student.curriculum }}</dd>
+        </dl>
+        <h3>已知薄弱点</h3>
+        <ul>
+          {% for item in student.weak_points %}
+          <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+        <h3>家长期望</h3>
+        <ul>
+          {% for item in student.parent_expectations %}
+          <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </aside>
+
+      <section class="panel">
+        <h2>生成单节课教学包</h2>
+        <form action="/workflow/start" method="post" enctype="multipart/form-data">
+          <label>
+            生成类型
+            <select name="document_type">
+              {% for key, label in type_labels.items() %}
+              <option value="{{ key }}" {% if key == "lesson_package" %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </label>
+
+          <div class="two">
+            <label>
+              学生地区
+              <input name="region" value="上海">
+            </label>
+            <label>
+              年级
+              <input name="grade" value="新八年级上">
+            </label>
+          </div>
+
+          <label>
+            本次课科目
+            <input name="subject_focus" value="语文 + 数学">
+          </label>
+
+          <label>
+            教材版本
+            <input name="textbook_version" placeholder="不知道可留空；留空时不会生成具体教材章节">
+          </label>
+
+          <label>
+            课时长度（分钟）
+            <input name="duration_minutes" type="number" value="120" min="30" max="240">
+          </label>
+
+          <label>
+            本次课目标
+            <textarea name="lesson_goal" required>语文+数学预习方法启动课：语文训练阅读概括、批注、预习五步法；数学训练审题、圈关键词、画图、规范步骤、概念三问法。</textarea>
+          </label>
+
+          <label>
+            学生薄弱点
+            <textarea name="weak_points">注意力容易分散，数学审题不够细，语文阅读概括偏弱</textarea>
+          </label>
+
+          <label>
+            家长期望
+            <textarea name="parent_expectations">学习方法、学习态度、自制力、规划能力、鼓励式教育</textarea>
+          </label>
+
+          <label>
+            学生最近表现 / 补充信息
+            <textarea name="student_observation" placeholder="例如：容易着急，遇到阅读概括题会直接摘句，数学读题时漏条件。"></textarea>
+          </label>
+
+          <label>
+            上节课记录
+            <textarea name="previous_lesson_record" placeholder="没有可留空；系统会提示缺少上节课记录。"></textarea>
+          </label>
+
+          <label class="check">
+            <input name="use_web_search" type="checkbox" value="true" checked>
+            启用联网搜索
+          </label>
+
+          <label>
+            搜索关键词
+            <input name="search_query" placeholder="可留空；系统会自动拆分为官方考情、课程标准、课外材料参考三类搜索">
+          </label>
+
+          <label>
+            上传本地资料（支持 .docx .pdf .md .txt）
+            <input name="files" type="file" multiple>
+          </label>
+
+          <button type="submit">创建分步教学包任务</button>
+        </form>
+      </section>
+    </section>
+
+    {% if workflow_state %}
+    <section class="panel result">
+      <div class="result-head">
+        <h2>分步生成进度</h2>
+        <div class="links">
+          <span>任务ID：{{ workflow_state.session_id }}</span>
+          {% if workflow_state.doc_paths %}
+            {% for key, path in workflow_state.doc_paths.items() %}
+            <span>{{ key }}：{{ path }}</span>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="steps">
+        {% for step, label in workflow_steps %}
+        <div class="step {{ workflow_state.status[step] }}">
+          <strong>{{ label }}</strong>
+          <span>{{ workflow_state.status[step] }}</span>
+          {% if workflow_state.status[step] in ["pending", "error"] %}
+          <form action="/workflow/{{ workflow_state.session_id }}/step/{{ step }}" method="post">
+            <button type="submit">生成/重试</button>
+          </form>
+          {% endif %}
+          {% if workflow_state.errors.get(step) %}
+          <small>{{ workflow_state.errors[step] }}</small>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+
+      {% if next_workflow_step %}
+      <form action="/workflow/{{ workflow_state.session_id }}/next" method="post" class="inline-form">
+        <button type="submit">执行下一步：{{ next_workflow_step }}</button>
+      </form>
+      {% endif %}
+
+      {% if workflow_state.logs %}
+      <details open>
+        <summary>生成日志</summary>
+        <ul>
+          {% for log in workflow_state.logs %}
+          <li>{{ log }}</li>
+          {% endfor %}
+        </ul>
+      </details>
+      {% endif %}
+
+      {% if workflow_state.context.missing_inputs %}
+      <div class="notice">
+        <strong>输入检查：</strong>缺少 {{ "、".join(workflow_state.context.missing_inputs) }}。系统会按边界规则生成通用能力导向课，不绑定具体教材章节。
+      </div>
+      {% endif %}
+
+      {% if workflow_state.context.boundary %}
+      <div class="notice">
+        <strong>学校内容边界：</strong>{{ workflow_state.context.boundary.required_disclaimer }}
+      </div>
+      {% endif %}
+
+      {% if workflow_state.context.source_note %}
+      <div class="notice">
+        <strong>资料可信度：</strong>{{ workflow_state.context.source_note }}
+      </div>
+      {% endif %}
+
+      {% if workflow_state.package %}
+      <details open>
+        <summary>已生成模块预览</summary>
+        <pre>{{ workflow_state.package }}</pre>
+      </details>
+      {% endif %}
+    </section>
+    {% endif %}
+
+    {% if result %}
+    <section class="panel result">
+      <div class="result-head">
+        <h2>生成结果</h2>
+        <div class="links">
+          {% if doc_paths %}
+            {% for key, path in doc_paths.items() %}
+            <span>{{ key }}：{{ path }}</span>
+            {% endfor %}
+          {% endif %}
+          {% if docx_error %}
+          <span class="warn">Word 导出失败：{{ docx_error }}</span>
+          {% endif %}
+        </div>
+      </div>
+
+      {% if missing_inputs %}
+      <div class="notice">
+        <strong>输入检查：</strong>缺少 {{ "、".join(missing_inputs) }}。系统会按边界规则生成通用能力导向课，不绑定具体教材章节。
+      </div>
+      {% endif %}
+
+      {% if boundary %}
+      <div class="notice">
+        <strong>学校内容边界：</strong>{{ boundary.required_disclaimer }}
+      </div>
+      {% endif %}
+
+      {% if source_note %}
+      <div class="notice">
+        <strong>资料可信度：</strong>{{ source_note }}
+      </div>
+      {% endif %}
+
+      {% if generation_error %}
+      <div class="notice warn">
+        <strong>生成异常：</strong>{{ generation_error }}
+      </div>
+      {% endif %}
+
+      {% if search_results %}
+      <details>
+        <summary>联网搜索结果</summary>
+        <ol>
+          {% for item in search_results %}
+          <li>
+            <strong>[{{ item.source_level }}级 | {{ item.search_category }}类] {{ item.title }}</strong><br>
+            <a href="{{ item.url }}" target="_blank">{{ item.url }}</a><br>
+            <span>{{ item.snippet }}</span>
+          </li>
+          {% endfor %}
+        </ol>
+      </details>
+      {% endif %}
+
+      {% if saved_files %}
+      <p class="muted">已读取本地资料：{{ "、".join(saved_files) }}</p>
+      {% endif %}
+
+      <pre>{{ result }}</pre>
+    </section>
+    {% endif %}
+  </main>
+</body>
+</html>

@@ -1,0 +1,170 @@
+{
+  "package_metadata": {
+    "title": "单节课教学包生成失败后的保底结构",
+    "student": "上海新八女生",
+    "region": "上海",
+    "grade": "新八年级上",
+    "subjects": [
+      "语文",
+      "数学"
+    ],
+    "duration_minutes": 120,
+    "package_type": "lesson_package",
+    "human_review_required": false
+  },
+  "lesson_positioning": {
+    "does_involve_school_text": false,
+    "avoids_textbook_deep_teaching": true,
+    "textbook_unit_ability_point": "教材版本或本地资料不足时，仅生成通用能力导向课。",
+    "shanghai_exam_ability_points": [
+      "信息筛选",
+      "内容概括",
+      "审题",
+      "规范表达"
+    ],
+    "content_boundary_statement": "本次内容不绑定具体教材章节；如需生成教材章节级内容，请上传教材目录、课本照片或输入准确教材版本。",
+    "lesson_focus": "语文+数学预习方法启动课"
+  },
+  "teacher_version": {
+    "teacher_goal": "保底版本仅供排查生成错误，正式授课前必须重新生成。",
+    "minute_by_minute_flow": [
+      {
+        "time": "0-20分钟",
+        "teaching_goal": "建立课堂目标和学习产出意识",
+        "teacher_script": "今天我们不抢学校课文内容，而是训练你上课前就能用的预习方法。",
+        "teacher_questions": [
+          "你平时预习时最容易卡在哪里？"
+        ],
+        "possible_student_answers": [
+          "不知道重点",
+          "读完记不住",
+          "数学题看不懂"
+        ],
+        "hints_if_stuck": [
+          "可以从语文阅读和数学审题各说一个困难。"
+        ],
+        "correction_if_wrong": [
+          "这不是能力差，而是还没有固定方法。我们今天先把方法固定下来。"
+        ],
+        "encouragement": [
+          "你能说出卡点，就已经开始会学习了。"
+        ],
+        "board_or_paper": "写下：目标-方法-产出",
+        "observation_points": [
+          "是否能说出一个具体困难"
+        ],
+        "student_output": "写出本节课个人目标"
+      }
+    ],
+    "question_explanations": []
+  },
+  "student_handout": {
+    "print_title": "语文+数学预习方法启动课",
+    "lesson_goals": [
+      "学会一套语文预习五步法",
+      "学会数学审题三步法"
+    ],
+    "task_checklist": [
+      "写出目标",
+      "完成练习",
+      "记录错因"
+    ],
+    "extra_reading_material": {
+      "title": "本次不绑定具体教材章节",
+      "text_type": "方法材料",
+      "difficulty": "八年级适用",
+      "word_count": "约300字",
+      "is_original": true,
+      "source_basis": "基于学生薄弱点生成",
+      "content": "正式内容生成失败，请检查模型输出。错误：('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))"
+    },
+    "knowledge_fill_in": [
+      "预习不是提前背答案，而是带着____去听课。"
+    ],
+    "class_practice": [
+      {
+        "id": "P1",
+        "question": "写出你今天要改进的一个学习动作。",
+        "answer_space": "________________"
+      }
+    ],
+    "answer_area": [
+      "________________"
+    ],
+    "method_summary_area": [
+      "今天我学到的方法是：________________"
+    ],
+    "vocabulary_or_phrase_area": [],
+    "mistake_record_area": [
+      "我的错因：________________"
+    ],
+    "self_reflection_area": [
+      "我今天最专注的时刻是：________________"
+    ],
+    "after_class_tasks": [
+      "每天用15分钟完成一次预习打卡。"
+    ]
+  },
+  "homework_answer_key": {
+    "basic": [],
+    "improvement": [],
+    "challenge": []
+  },
+  "parent_feedback": {
+    "what_was_learned": "本次生成失败，系统输出保底结构。",
+    "student_performance": "需要重新生成后填写。",
+    "strengths": "需要课堂观察后填写。",
+    "problems_found": "模型生成错误：('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None))",
+    "improvement_strategy": "检查 API、网络或提示词后重新生成。",
+    "home_support_suggestions": "暂不发送给家长。",
+    "next_lesson_plan": "重新生成正式教学包。",
+    "school_content_boundary_note": "本次内容不绑定具体教材章节；如需生成教材章节级内容，请上传教材目录、课本照片或输入准确教材版本。"
+  },
+  "student_record_update": {
+    "completed_content": [],
+    "new_weak_points": [],
+    "learning_habit_performance": "待记录",
+    "attention_performance": "待记录",
+    "self_control_performance": "待记录",
+    "planning_ability_performance": "待记录",
+    "next_lesson_suggestions": [
+      "重新生成正式教学包"
+    ],
+    "parent_support_needed": []
+  },
+  "source_basis": {
+    "reliability_summary": "未检索到可用联网资料。系统应基于用户上传资料、学生画像和通用教学方法生成。",
+    "a_b_sources_used_for_direction": [],
+    "c_sources_reference_only": [],
+    "d_sources_excluded": [],
+    "local_material_used": false,
+    "original_text_statement": "保底结构，无正式原创阅读材料。"
+  },
+  "evaluator_score": 94,
+  "evaluator_comments": [
+    "结构完整，达到 MVP 教学包交付要求。"
+  ],
+  "evaluator_item_scores": {
+    "1": 5,
+    "2": 5,
+    "3": 5,
+    "4": 5,
+    "5": 3,
+    "6": 5,
+    "7": 5,
+    "8": 5,
+    "9": 5,
+    "10": 3,
+    "11": 5,
+    "12": 5,
+    "13": 5,
+    "14": 3,
+    "15": 5,
+    "16": 5,
+    "17": 5,
+    "18": 5,
+    "19": 5,
+    "20": 5
+  },
+  "requires_human_review": false
+}

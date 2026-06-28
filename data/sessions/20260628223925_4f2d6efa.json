@@ -1,0 +1,65 @@
+{
+  "session_id": "20260628223925_4f2d6efa",
+  "created_at": "2026-06-28T22:39:25",
+  "request": {
+    "document_type": "lesson_package",
+    "region": "上海",
+    "grade": "新八年级上",
+    "subject_focus": "语文 + 数学",
+    "textbook_version": "",
+    "duration_minutes": 120,
+    "lesson_goal": "语文+数学预习方法启动课",
+    "weak_points": "注意力容易分散，数学审题不够细，语文阅读概括偏弱",
+    "parent_expectations": "学习方法、学习态度、自制力、规划能力、鼓励式教育",
+    "student_observation": "测试分步流程",
+    "previous_lesson_record": "",
+    "local_context": "",
+    "search_query": "",
+    "use_web_search": false
+  },
+  "saved_files": [],
+  "status": {
+    "prepare": "done",
+    "teacher_version": "pending",
+    "student_handout": "pending",
+    "homework_answer_key": "pending",
+    "parent_feedback": "pending",
+    "student_record_update": "pending",
+    "quality_export": "pending"
+  },
+  "logs": [
+    "22:39:25 完成资料检索与学校内容边界检查。"
+  ],
+  "context": {
+    "boundary": {
+      "subjects": [
+        "语文",
+        "数学"
+      ],
+      "involves_school_text": false,
+      "involves_upcoming_school_text": false,
+      "needs_text_detail_teaching": false,
+      "can_convert_to_extra_reading": true,
+      "can_convert_to_exam_training": true,
+      "allow_textbook_chapter_detail": false,
+      "package_positioning": "能力导向型家教教学包：避开课文精讲，围绕课本单元能力点、上海题型和学生薄弱点生成课外材料与专项训练。",
+      "restrictions": [
+        "数学可以进行教材知识预习，但必须包含概念理解、例题、分层练习、易错点和规范步骤训练。",
+        "语文不得默认提前精讲学校课文；只能轻触背景、字词和预习方法，核心训练应转为课外同类文本与上海题型专项。",
+        "教材版本或本地资料不足时，不允许生成具体教材章节内容，只能生成通用能力导向课。"
+      ],
+      "required_disclaimer": "本次内容不绑定具体教材章节；如需生成教材章节级内容，请上传教材目录、课本照片或输入准确教材版本。"
+    },
+    "missing_inputs": [
+      "教材版本",
+      "本地资料",
+      "上节课记录"
+    ],
+    "search_results": [],
+    "source_note": "未检索到可用联网资料。系统应基于用户上传资料、学生画像和通用教学方法生成。",
+    "web_summary": ""
+  },
+  "package": {},
+  "doc_paths": {},
+  "errors": {}
+}

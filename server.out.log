@@ -1,0 +1,12 @@
+INFO:     127.0.0.1:43407 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53158 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:9015 - "POST /workflow/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:16338 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53070 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53070 - "GET /static/styles.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53070 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:2276 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46372 - "POST /workflow/start HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51506 - "POST /workflow/20260629002841_ae25ba78/step/teacher_version HTTP/1.1" 200 OK
+INFO:     127.0.0.1:4378 - "POST /workflow/20260629002841_ae25ba78/step/homework_answer_key HTTP/1.1" 200 OK
+INFO:     127.0.0.1:1599 - "POST /workflow/20260629002841_ae25ba78/step/parent_feedback HTTP/1.1" 200 OK
